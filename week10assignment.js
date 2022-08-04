@@ -23,6 +23,7 @@ deleteCard(card) {
     this.cards.splice(index, 1);
     }
 }
+
 let decks = [];
 let deckId = 0;
 
@@ -52,8 +53,8 @@ function drawDOM() {
        title.appendChild(createDeckDeleteButton(Deck));
        deckDiv.appendChild(title);
        deckDiv.appendChild(table);
-       for (Card of Deck.cards) {
-        createCardRow(Deck, table, Card);
+       for (card of Deck.cards) {
+        createCardRow(Deck, table, card);
        } 
     }
 }
@@ -63,13 +64,13 @@ function createCardRow(deck, table, card) {
     row.insertCell(0).innerHTML = card.name;
     row.insertCell(1).innerHTML = card.type;
     row.insertCell(2).innerHTML = card.color;
-    let actions = row.insertCell(2);
+    let actions = row.insertCell(3);
     actions.appendChild(createDeleteRowButton(deck, card));
 }
 
 function createDeleteRowButton(deck, card) {
     let btn = document.createElement('button');
-    btn.className = 'btn btn-dark';
+    btn.className = 'btn btn-dark text-danger border-danger';
     btn.innerHTML = 'Delete';
     btn.onclick = () => {
         let index = deck.cards.indexOf(card);
@@ -82,7 +83,7 @@ function createDeleteRowButton(deck, card) {
 
 function createDeckDeleteButton(deck) {
     let btn = document.createElement('button');
-    btn.className = 'btn btn-dark';
+    btn.className = 'btn btn-dark text-danger border-danger';
     btn.innerHTML = 'Delete Deck';
     btn.onclick = () => {
         let index = decks.indexOf(deck);
@@ -95,10 +96,10 @@ function createDeckDeleteButton(deck) {
 
 function createNewCardButton(deck) {
     let btn = document.createElement('button');
-    btn.className = 'btn btn-dark';
+    btn.className = 'btn btn-dark text-danger border-danger';
     btn.innerHTML = 'Create';
-    btn.onlcick = () => {
-        deck.cards.push(new Card(getValue(`name-input-${deck.id}`), getValue(`type-input-${deck.id}`), getValue(`color-input-${deck.id}`)));
+    btn.onclick = () => {
+        deck.addCard(new Card(getValue(`name-input-${deck.id}`), getValue(`type-input-${deck.id}`), getValue(`color-input-${deck.id}`)));
         drawDOM();
     };
 
@@ -107,7 +108,7 @@ function createNewCardButton(deck) {
 
 function createDeckTable(deck) {
     let table = document.createElement('table');
-    table.setAttribute('class', 'table table-dark table-striped table-hover');
+    table.setAttribute('class', 'text-danger table table-dark table-striped table-hover');
 
     let row = table.insertRow(0);
     let nameColumn = document.createElement('th');
